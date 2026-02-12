@@ -7,12 +7,12 @@ import static java.nio.file.StandardOpenOption.CREATE;
 
 public class ShortLister {
     public static void main(String[] args) {
-        ShortWordFilter swf = new ShortWordFilter();
+        ShortWordFilter shortWordFilter = new ShortWordFilter();
         JFileChooser chooser = new JFileChooser();
         File selectedFile;
         String counter = "";
         ArrayList<String> lines = new ArrayList<>();
-        String[] numberOfWords;
+        String[] words = new String[0];
         try {
             File workingDirectory = new File(System.getProperty("user.dir"));
             chooser.setCurrentDirectory(workingDirectory);
@@ -21,17 +21,12 @@ public class ShortLister {
                 Path file = selectedFile.toPath();
                 InputStream inStream = new BufferedInputStream(Files.newInputStream(file, CREATE));
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inStream));
-                int lineCount = 0;
-                int words = 0;
                 while (reader.ready()) {
                     counter = reader.readLine().trim();
                     lines.add(counter);
-                    lineCount++;
-                    numberOfWords = counter.split(" ");
-                    words += numberOfWords.length;
-                    for (int i = 0; i < numberOfWords.length; i++) {
-                        boolean trueOrFalse = swf.accept(numberOfWords);
-                        System.out.printf("%-10s, %8b", numberOfWords, trueOrFalse);
+                    words = counter.split(" ");
+                    for (String word : words) {
+                        System.out.printf("%-10s %8b\n", word, shortWordFilter.accept(word));
                     }
                 }
                 reader.close();

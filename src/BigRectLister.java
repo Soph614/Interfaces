@@ -30,7 +30,10 @@ public class BigRectLister {
         rectangles.add((rectangle09));
         rectangles.add((rectangle10));
         for (Rectangle rectangle : rectangles) {
-            System.out.printf("%-50s %8s\n", rectangle, bigRectangleFilter.accept(rectangle));
+            if (bigRectangleFilter.accept(rectangle)) {
+                System.out.println(rectangle);
+            }
+            else {}
         }
     }
 }

@@ -26,7 +26,11 @@ public class ShortLister {
                     lines.add(counter);
                     words = counter.split(" ");
                     for (String word : words) {
-                        System.out.printf("%-10s %8b\n", word, shortWordFilter.accept(word));
+                        if (shortWordFilter.accept(word)) {
+                            System.out.println(word);
+                        }
+                        else {
+                        }
                     }
                 }
                 reader.close();
